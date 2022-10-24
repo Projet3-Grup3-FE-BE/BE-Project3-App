@@ -13,6 +13,11 @@ type Repository struct {
 	mock.Mock
 }
 
+// Login implements domain.Repository
+func (*Repository) Login(newUser domain.Core) (domain.Core, error) {
+	panic("unimplemented")
+}
+
 // Insert provides a mock function with given fields: newUser
 func (_m *Repository) Insert(newUser domain.Core) (domain.Core, error) {
 	ret := _m.Called(newUser)

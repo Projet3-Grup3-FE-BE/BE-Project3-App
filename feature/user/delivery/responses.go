@@ -39,18 +39,30 @@ type registerRespons struct {
 	Alamat_pengiriman string `json:"alamat_pengiriman"`
 }
 
+type loginRespons struct {
+	ID    uint   `json:"id"`
+	Email string `json:"email"`
+	Name  string `json:"name"`
+	Phone string `json:"phone"`
+	Bio   string `json:"bio"`
+}
+
 func ToResponse(core interface{}, code string) interface{} {
 	var res interface{}
 	switch code {
 	case "reg":
 		cnv := core.(domain.Core)
 		res = registerRespons{
+			ID:                cnv.ID,
 			Username:          cnv.Username,
 			Email:             cnv.Email,
 			Password:          cnv.Password,
 			Name:              cnv.Name,
 			Alamat_pengiriman: cnv.Alamat_pengiriman,
 		}
+	case "login":
+		cnv := core.(domain.Core)
+		res = loginRespons{ID: cnv.ID, Email: cnv.Email, Name: cnv.Name, Phone: cnv.Phone, Bio: cnv.Bio}
 	}
 	return res
 }

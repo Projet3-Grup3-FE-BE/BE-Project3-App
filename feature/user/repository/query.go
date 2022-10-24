@@ -27,3 +27,14 @@ func (rq *repoQuery) Insert(newUser domain.Core) (domain.Core, error) {
 	newUser = ToDomain(cnv)
 	return newUser, nil
 }
+
+func (rq *repoQuery) Login(newUser domain.Core) (domain.Core, error) {
+	var resQry User
+	if err := rq.db.First(&resQry, "email = ?", newUser.Email).Error; err != nil {
+		return domain.Core{}, err
+	}
+
+	// selesai dari DB
+	res := ToDomain(resQry)
+	return res, nil
+}
