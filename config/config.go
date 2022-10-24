@@ -29,11 +29,6 @@ func NewConfig() *AppConfig {
 
 func initConfig() *AppConfig {
 	var app AppConfig
-	// isProduction, errPro := strconv.Atoi(os.Getenv("IS_PRODuCTION"))
-	// if errPro != nil {
-	// 	log.Error("config error :", errPro.Error())
-	// 	return nil
-	// }
 
 	err := godotenv.Load("config.env")
 	if err != nil {

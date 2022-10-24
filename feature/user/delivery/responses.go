@@ -4,99 +4,65 @@ import (
 	"be_project3team3/feature/user/domain"
 )
 
-func SuccessResponses(msg string, data interface{}) map[string]interface{} {
+func SuccessDelete(msg string) map[string]interface{} {
 	return map[string]interface{}{
 		"message": msg,
-		"data":    data,
 	}
 }
 
-func FailResponses(msg string) map[string]string {
+func FailResponse(msg string) map[string]string {
 	return map[string]string{
 		"message": msg,
 	}
 }
 
-func SuccessDeleteResponses(msg string) map[string]interface{} {
-	return map[string]interface{}{
-		"message": msg,
-	}
-}
-
-func SuccessLoginResponses(msg string, data interface{}) map[string]interface{} {
+func SuccessResponse(msg string, data interface{}) map[string]interface{} {
 	return map[string]interface{}{
 		"message": msg,
 		"data":    data,
 	}
 }
+func SuccessLogin(msg string, token string, data interface{}) map[string]interface{} {
+	return map[string]interface{}{
+		"message": msg,
+		"data":    data,
+		"token":   token,
+	}
+}
 
 type registerRespons struct {
+	ID                uint   `json:"id"`
+	Username          string `json:"username"`
+	Email             string `json:"email"`
+	Password          string `json:"password"`
+	Name              string `json:"name"`
+	Alamat_pengiriman string `json:"alamat_pengiriman"`
+}
+
+type loginRespons struct {
 	ID    uint   `json:"id"`
-	Name  string `json:"name"`
 	Email string `json:"email"`
+	Name  string `json:"name"`
 	Phone string `json:"phone"`
 	Bio   string `json:"bio"`
 }
 
-type loginResponses struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
-	Phone string `json:"phone"`
-	Bio   string `json:"bio"`
-	Token string `json:"token"`
-}
-
-type EditUserResponseFormat struct {
-	ID       uint   `json:"id"`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Phone    string `json:"phone"`
-	Bio      string `json:"bio"`
-	Gender   string `json:"gender"`
-	Location string `json:"location"`
-}
-type GetUserResponseFormat struct {
-	ID       uint   `json:"id"`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Phone    string `json:"phone"`
-	Bio      string `json:"bio"`
-	Gender   string `json:"gender"`
-	Location string `json:"location"`
-}
-
-func ToResponse(core interface{}, code string, token string) interface{} {
+func ToResponse(core interface{}, code string) interface{} {
 	var res interface{}
-
 	switch code {
 	case "reg":
 		cnv := core.(domain.Core)
-		res = registerRespons{ID: cnv.ID, Name: cnv.Name, Email: cnv.Email, Phone: cnv.Phone, Bio: cnv.Bio}
+		res = registerRespons{
+			ID:                cnv.ID,
+			Username:          cnv.Username,
+			Email:             cnv.Email,
+			Password:          cnv.Password,
+			Name:              cnv.Name,
+			Alamat_pengiriman: cnv.Alamat_pengiriman,
+		}
 	case "login":
 		cnv := core.(domain.Core)
-		res = loginResponses{Name: cnv.Name, Email: cnv.Email, Token: token}
-	case "edit":
-		cnv := core.(domain.Core)
-		res = EditUserResponseFormat{
-			ID:       cnv.ID,
-			Name:     cnv.Name,
-			Email:    cnv.Email,
-			Phone:    cnv.Phone,
-			Bio:      cnv.Bio,
-			Gender:   cnv.Gender,
-			Location: cnv.Location,
-		}
-	case "get":
-		cnv := core.(domain.Core)
-		res = GetUserResponseFormat{
-			ID:       cnv.ID,
-			Name:     cnv.Name,
-			Email:    cnv.Email,
-			Phone:    cnv.Phone,
-			Bio:      cnv.Bio,
-			Gender:   cnv.Gender,
-			Location: cnv.Location,
-		}
+		res = loginRespons{ID: cnv.ID, Email: cnv.Email, Name: cnv.Name, Phone: cnv.Phone, Bio: cnv.Bio}
 	}
 	return res
 }
