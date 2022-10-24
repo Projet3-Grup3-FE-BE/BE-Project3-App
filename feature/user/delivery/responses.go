@@ -47,6 +47,16 @@ type loginRespons struct {
 	Bio   string `json:"bio"`
 }
 
+type UpdateRespons struct {
+	ID       uint   `json:"id"`
+	Email    string `json:"email"`
+	Name     string `json:"name"`
+	Phone    string `json:"phone"`
+	Bio      string `json:"bio"`
+	Gender   string `json:"gender"`
+	Location string `json:"location"`
+}
+
 func ToResponse(core interface{}, code string) interface{} {
 	var res interface{}
 	switch code {
@@ -63,6 +73,9 @@ func ToResponse(core interface{}, code string) interface{} {
 	case "login":
 		cnv := core.(domain.Core)
 		res = loginRespons{ID: cnv.ID, Email: cnv.Email, Name: cnv.Name, Phone: cnv.Phone, Bio: cnv.Bio}
+	case "upd":
+		cnv := core.(domain.Core)
+		res = UpdateRespons{ID: cnv.ID, Email: cnv.Email, Name: cnv.Name, Phone: cnv.Phone, Bio: cnv.Bio, Gender: cnv.Gender, Location: cnv.Location}
 	}
 	return res
 }

@@ -15,6 +15,8 @@ type User struct {
 	Alamat_pengiriman string
 	Phone             string
 	Bio               string
+	Gender            string
+	Location          string
 }
 
 func FromDomain(du domain.Core) User {
@@ -27,6 +29,8 @@ func FromDomain(du domain.Core) User {
 		Alamat_pengiriman: du.Alamat_pengiriman,
 		Phone:             du.Phone,
 		Bio:               du.Bio,
+		Gender:            du.Gender,
+		Location:          du.Gender,
 	}
 }
 
@@ -40,13 +44,15 @@ func ToDomain(u User) domain.Core {
 		Alamat_pengiriman: u.Alamat_pengiriman,
 		Phone:             u.Phone,
 		Bio:               u.Bio,
+		Gender:            u.Gender,
+		Location:          u.Location,
 	}
 }
 
 func ToDomainArray(au []User) []domain.Core {
 	var res []domain.Core
 	for _, val := range au {
-		res = append(res, domain.Core{ID: val.ID, Username: val.Username, Email: val.Email, Password: val.Password, Name: val.Name, Alamat_pengiriman: val.Alamat_pengiriman, Phone: val.Phone, Bio: val.Bio})
+		res = append(res, domain.Core{ID: val.ID, Username: val.Username, Email: val.Email, Password: val.Password, Name: val.Name, Alamat_pengiriman: val.Alamat_pengiriman, Phone: val.Phone, Bio: val.Bio, Gender: val.Gender, Location: val.Location})
 	}
 	return res
 }

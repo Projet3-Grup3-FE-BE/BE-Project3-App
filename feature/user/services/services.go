@@ -48,8 +48,8 @@ func (rs *repoService) Register(newUser domain.Core) (domain.Core, error) {
 
 }
 
-func (us *repoService) LoginUser(newUser domain.Core) (domain.Core, error) {
-	res, err := us.qry.Login(newUser)
+func (rs *repoService) LoginUser(newUser domain.Core) (domain.Core, error) {
+	res, err := rs.qry.Login(newUser)
 	if err != nil {
 		log.Error(err.Error())
 		if strings.Contains(err.Error(), "table") {
@@ -66,7 +66,7 @@ func (us *repoService) LoginUser(newUser domain.Core) (domain.Core, error) {
 	return res, nil
 
 }
-func (us *repoService) GenerateToken(id uint) string {
+func (rs *repoService) GenerateToken(id uint) string {
 	claim := make(jwt.MapClaims)
 	claim["authorized"] = true
 	claim["id"] = id
@@ -80,4 +80,31 @@ func (us *repoService) GenerateToken(id uint) string {
 	}
 
 	return str
+}
+
+func (rs *repoService) UpdateProfile(updatedData domain.Core) (domain.Core, error) {
+	if updatedData.Password != "" {
+		generate, _ := bcrypt.GenerateFromPassword([]byte(updatedData.Password), 10)
+		updatedData.Password = string(generate)
+	}
+
+	res, err := rs.qry.Update(updatedData)
+	if err != nil {
+		if strings.Contains(err.Error(), "column") {
+			return domain.Core{}, errors.New("rejected from database")
+		}
+		return domain.Core{}, errors.New("rejected from database")
+	}
+
+	return res, nil
+}
+
+func (us *repoService) Delete(ID uint) error {
+	err := us.qry.Delete(ID)
+	if err != nil {
+		log.Error(err.Error())
+		return errors.New("no data")
+	}
+
+	return nil
 }
