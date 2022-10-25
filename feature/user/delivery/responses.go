@@ -22,39 +22,79 @@ func SuccessResponse(msg string, data interface{}) map[string]interface{} {
 		"data":    data,
 	}
 }
-func SuccessLogin(msg string, token string, data interface{}) map[string]interface{} {
+func SuccessLogin(msg string, data interface{}) map[string]interface{} {
 	return map[string]interface{}{
 		"message": msg,
 		"data":    data,
-		"token":   token,
 	}
 }
 
 type registerRespons struct {
-	ID                uint   `json:"id"`
-	Username          string `json:"username"`
-	Email             string `json:"email"`
-	Password          string `json:"password"`
-	Name              string `json:"name"`
-	Alamat_pengiriman string `json:"alamat_pengiriman"`
+	ID       uint   `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
+	Phone    string `json:"phone"`
+	Address  string `json:"address"`
+	ShopName string `json:"shop_name"`
+	ImageUrl string `json:"image_url"`
 }
 
 type loginRespons struct {
-	ID    uint   `json:"id"`
-	Email string `json:"email"`
-	Name  string `json:"name"`
-	Phone string `json:"phone"`
-	Bio   string `json:"bio"`
+	ID       uint   `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
+	Phone    string `json:"phone"`
+	Address  string `json:"address"`
+	ShopName string `json:"shop_name"`
+	ImageUrl string `json:"image_url"`
+	Token    string `json:"token"`
 }
 
 type UpdateRespons struct {
 	ID       uint   `json:"id"`
+	Username string `json:"username"`
 	Email    string `json:"email"`
+	Password string `json:"password"`
 	Name     string `json:"name"`
 	Phone    string `json:"phone"`
-	Bio      string `json:"bio"`
-	Gender   string `json:"gender"`
-	Location string `json:"location"`
+	Address  string `json:"address"`
+	ShopName string `json:"shop_name"`
+	ImageUrl string `json:"image_url"`
+}
+
+type GetDataRespons struct {
+	ID                uint   `json:"id"`
+	Username          string `json:"username"`
+	Name              string `json:"name"`
+	Phone             string `json:"phone"`
+	Recipient_address string `json:"recipient_address"`
+	ShopName          string `json:"shop_name"`
+}
+
+func ToResponseLogin(core interface{}, token string, code string) interface{} {
+	var res interface{}
+	switch code {
+	case "login":
+		cnv := core.(domain.Core)
+		res = loginRespons{
+			ID:       cnv.ID,
+			Username: cnv.Username,
+			Email:    cnv.Email,
+			Password: cnv.Password,
+			Name:     cnv.Name,
+			Phone:    cnv.Phone,
+			Address:  cnv.Address,
+			ShopName: cnv.ShopName,
+			ImageUrl: cnv.ImageUrl,
+			Token:    token,
+		}
+	}
+	return res
+
 }
 
 func ToResponse(core interface{}, code string) interface{} {
@@ -63,19 +103,39 @@ func ToResponse(core interface{}, code string) interface{} {
 	case "reg":
 		cnv := core.(domain.Core)
 		res = registerRespons{
-			ID:                cnv.ID,
-			Username:          cnv.Username,
-			Email:             cnv.Email,
-			Password:          cnv.Password,
-			Name:              cnv.Name,
-			Alamat_pengiriman: cnv.Alamat_pengiriman,
+			ID:       cnv.ID,
+			Username: cnv.Username,
+			Email:    cnv.Email,
+			Password: cnv.Password,
+			Name:     cnv.Name,
+			Phone:    cnv.Phone,
+			Address:  cnv.Address,
+			ShopName: cnv.ShopName,
+			ImageUrl: cnv.ImageUrl,
 		}
-	case "login":
-		cnv := core.(domain.Core)
-		res = loginRespons{ID: cnv.ID, Email: cnv.Email, Name: cnv.Name, Phone: cnv.Phone, Bio: cnv.Bio}
 	case "upd":
 		cnv := core.(domain.Core)
-		res = UpdateRespons{ID: cnv.ID, Email: cnv.Email, Name: cnv.Name, Phone: cnv.Phone, Bio: cnv.Bio, Gender: cnv.Gender, Location: cnv.Location}
+		res = UpdateRespons{
+			ID:       cnv.ID,
+			Username: cnv.Username,
+			Email:    cnv.Email,
+			Password: cnv.Password,
+			Name:     cnv.Name,
+			Phone:    cnv.Phone,
+			Address:  cnv.Address,
+			ShopName: cnv.ShopName,
+			ImageUrl: cnv.ImageUrl,
+		}
+	case "getuser":
+		cnv := core.(domain.Core)
+		res = GetDataRespons{
+			ID:                cnv.ID,
+			Username:          cnv.Username,
+			Name:              cnv.Name,
+			Phone:             cnv.Phone,
+			Recipient_address: cnv.Recipient_address,
+			ShopName:          cnv.ShopName,
+		}
 	}
 	return res
 }

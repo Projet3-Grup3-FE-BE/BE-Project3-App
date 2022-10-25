@@ -12,11 +12,11 @@ type User struct {
 	Email             string
 	Password          string
 	Name              string
-	Alamat_pengiriman string
 	Phone             string
-	Bio               string
-	Gender            string
-	Location          string
+	Address           string
+	ShopName          string
+	ImageUrl          string
+	Recipient_address string
 }
 
 func FromDomain(du domain.Core) User {
@@ -26,11 +26,11 @@ func FromDomain(du domain.Core) User {
 		Email:             du.Email,
 		Password:          du.Password,
 		Name:              du.Name,
-		Alamat_pengiriman: du.Alamat_pengiriman,
 		Phone:             du.Phone,
-		Bio:               du.Bio,
-		Gender:            du.Gender,
-		Location:          du.Gender,
+		Address:           du.Address,
+		ShopName:          du.ShopName,
+		ImageUrl:          du.ImageUrl,
+		Recipient_address: du.Recipient_address,
 	}
 }
 
@@ -41,18 +41,18 @@ func ToDomain(u User) domain.Core {
 		Email:             u.Email,
 		Password:          u.Password,
 		Name:              u.Name,
-		Alamat_pengiriman: u.Alamat_pengiriman,
 		Phone:             u.Phone,
-		Bio:               u.Bio,
-		Gender:            u.Gender,
-		Location:          u.Location,
+		Address:           u.Address,
+		ShopName:          u.ShopName,
+		ImageUrl:          u.ImageUrl,
+		Recipient_address: u.Recipient_address,
 	}
 }
 
 func ToDomainArray(au []User) []domain.Core {
 	var res []domain.Core
 	for _, val := range au {
-		res = append(res, domain.Core{ID: val.ID, Username: val.Username, Email: val.Email, Password: val.Password, Name: val.Name, Alamat_pengiriman: val.Alamat_pengiriman, Phone: val.Phone, Bio: val.Bio, Gender: val.Gender, Location: val.Location})
+		res = append(res, domain.Core{ID: val.ID, Username: val.Username, Email: val.Email, Password: val.Password, Name: val.Name, Phone: val.Phone, Address: val.Address, ShopName: val.ShopName, ImageUrl: val.ImageUrl, Recipient_address: val.Recipient_address})
 	}
 	return res
 }
