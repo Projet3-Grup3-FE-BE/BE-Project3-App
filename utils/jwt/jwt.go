@@ -17,11 +17,12 @@ func InitJWT(c *config.AppConfig) {
 	key = c.JWSecret
 }
 
-func GenerateJWTToken(id uint) (string, error) {
+func GenerateJWTToken(id uint, shopname string) (string, error) {
 
 	claims := make(jwt.MapClaims)
 	claims["authorized"] = true
 	claims["id"] = id
+	claims["shop_name"] = shopname
 	claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -55,4 +56,14 @@ func ExtractToken(c echo.Context) (uint, int64) {
 	}
 
 	return 0, 0
+}
+
+func ExtracShopNameToken(c echo.Context) string {
+	token := c.Get("user").(*jwt.Token)
+	if token.Valid {
+		claims := token.Claims.(jwt.MapClaims)
+		return claims["shop_name"].(string)
+	}
+
+	return ""
 }
