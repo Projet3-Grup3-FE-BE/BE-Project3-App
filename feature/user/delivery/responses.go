@@ -33,7 +33,6 @@ type registerRespons struct {
 	ID       uint   `json:"id"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
-	Password string `json:"password"`
 	Name     string `json:"name"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`
@@ -45,7 +44,6 @@ type loginRespons struct {
 	ID       uint   `json:"id"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
-	Password string `json:"password"`
 	Name     string `json:"name"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`
@@ -58,7 +56,6 @@ type UpdateRespons struct {
 	ID       uint   `json:"id"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
-	Password string `json:"password"`
 	Name     string `json:"name"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`
@@ -66,20 +63,10 @@ type UpdateRespons struct {
 	ImageUrl string `json:"image_url"`
 }
 
-type GetDataRespons struct {
-	ID                uint   `json:"id"`
-	Username          string `json:"username"`
-	Name              string `json:"name"`
-	Phone             string `json:"phone"`
-	Recipient_address string `json:"recipient_address"`
-	ShopName          string `json:"shop_name"`
-}
-
 type GetMeRespons struct {
 	ID       uint   `json:"id"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
-	Password string `json:"password"`
 	Name     string `json:"name"`
 	Phone    string `json:"phone"`
 	Address  string `json:"address"`
@@ -96,7 +83,6 @@ func ToResponseLogin(core interface{}, token string, code string) interface{} {
 			ID:       cnv.ID,
 			Username: cnv.Username,
 			Email:    cnv.Email,
-			Password: cnv.Password,
 			Name:     cnv.Name,
 			Phone:    cnv.Phone,
 			Address:  cnv.Address,
@@ -118,7 +104,6 @@ func ToResponse(core interface{}, code string) interface{} {
 			ID:       cnv.ID,
 			Username: cnv.Username,
 			Email:    cnv.Email,
-			Password: cnv.Password,
 			Name:     cnv.Name,
 			Phone:    cnv.Phone,
 			Address:  cnv.Address,
@@ -131,22 +116,11 @@ func ToResponse(core interface{}, code string) interface{} {
 			ID:       cnv.ID,
 			Username: cnv.Username,
 			Email:    cnv.Email,
-			Password: cnv.Password,
 			Name:     cnv.Name,
 			Phone:    cnv.Phone,
 			Address:  cnv.Address,
 			ShopName: cnv.ShopName,
 			ImageUrl: cnv.ImageUrl,
-		}
-	case "getuser":
-		cnv := core.(domain.Core)
-		res = GetDataRespons{
-			ID:                cnv.ID,
-			Username:          cnv.Username,
-			Name:              cnv.Name,
-			Phone:             cnv.Phone,
-			Recipient_address: cnv.Recipient_address,
-			ShopName:          cnv.ShopName,
 		}
 	case "getMe":
 		cnv := core.(domain.Core)
@@ -154,7 +128,6 @@ func ToResponse(core interface{}, code string) interface{} {
 			ID:       cnv.ID,
 			Username: cnv.Username,
 			Email:    cnv.Email,
-			Password: cnv.Password,
 			Name:     cnv.Name,
 			Phone:    cnv.Phone,
 			Address:  cnv.Address,

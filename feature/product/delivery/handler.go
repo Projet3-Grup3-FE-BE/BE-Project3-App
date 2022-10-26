@@ -4,16 +4,9 @@ import (
 	"be_project3team3/config"
 	"be_project3team3/feature/product/domain"
 	"be_project3team3/utils/jwt"
-	"context"
 	"log"
-	"mime/multipart"
 	"net/http"
 	"strings"
-
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -233,32 +226,32 @@ func (us *productHandler) Deleteproduct() echo.HandlerFunc {
 	}
 }
 
-var uploader *s3manager.Uploader
+// var uploader *s3manager.Uploader
 
-func NewUploader() *s3manager.Uploader {
-	s3Config := &aws.Config{
-		Region:      aws.String("ap-southeast-1"),
-		Credentials: credentials.NewStaticCredentials("AKIARQA2KZ55LJN2AW7L", "zsp4Vtew2D/dTYjHQj48WNmSJUP/WJ3m2wm66qIm", ""),
-	}
-	s3Session := session.New(s3Config)
-	uploader := s3manager.NewUploader(s3Session)
-	return uploader
-}
+// func NewUploader() *s3manager.Uploader {
+// 	s3Config := &aws.Config{
+// 		Region:      aws.String("ap-southeast-1"),
+// 		Credentials: credentials.NewStaticCredentials("AKIARQA2KZ55LJN2AW7L", "zsp4Vtew2D/dTYjHQj48WNmSJUP/WJ3m2wm66qIm", ""),
+// 	}
+// 	s3Session := session.New(s3Config)
+// 	uploader := s3manager.NewUploader(s3Session)
+// 	return uploader
+// }
 
-func upload(c echo.Context, filename string, src multipart.File) (string, error) {
-	logger := c.Logger()
-	log.Println("uploading")
+// func upload(c echo.Context, filename string, src multipart.File) (string, error) {
+// 	logger := c.Logger()
+// 	log.Println("uploading")
 
-	upInput := &s3manager.UploadInput{
-		Bucket: aws.String("projectalta"), // bucket's name
-		Key:    aws.String(filename),      // files destination location
-		Body:   src,                       // content of the file
-		//ContentType: aws.String("image/jpg"),   // content type
-	}
-	res, err := uploader.UploadWithContext(context.Background(), upInput)
-	if err != nil {
-		logger.Fatal(err)
-		return "", err
-	}
-	return res.Location, nil
-}
+// 	upInput := &s3manager.UploadInput{
+// 		Bucket: aws.String("projectalta"), // bucket's name
+// 		Key:    aws.String(filename),      // files destination location
+// 		Body:   src,                       // content of the file
+// 		//ContentType: aws.String("image/jpg"),   // content type
+// 	}
+// 	res, err := uploader.UploadWithContext(context.Background(), upInput)
+// 	if err != nil {
+// 		logger.Fatal(err)
+// 		return "", err
+// 	}
+// 	return res.Location, nil
+// }

@@ -13,6 +13,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+var key string
+
+func InitJWT(c *config.AppConfig) {
+	key = c.JWSecret
+}
+
 func New(repo domain.Repository) domain.Service {
 	return &repoService{
 		qry: repo,
@@ -73,7 +79,7 @@ func (rs *repoService) GenerateToken(id uint) string {
 	claim["exp"] = time.Now().Add(time.Hour * 1).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 
-	str, err := token.SignedString([]byte("R4hs!!a@"))
+	str, err := token.SignedString([]byte(key))
 	if err != nil {
 		log.Error(err.Error())
 		return ""

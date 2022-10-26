@@ -5,7 +5,6 @@ import (
 	"be_project3team3/feature/user/domain"
 	jwt "be_project3team3/utils/jwt"
 	"net/http"
-	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -26,10 +25,10 @@ func New(e *echo.Echo, srv domain.Service) {
 
 	e.POST("/register", handler.Register())
 	e.POST("/login", handler.LoginUser())
-	e.PUT("/users", handler.UpdateUser(), middleware.JWT([]byte("R4hs!!a@")))
-	e.DELETE("/users", handler.DeleteByID(), middleware.JWT([]byte("R4hs!!a@")))
-	e.GET("/users/username", handler.ShowUser(), middleware.JWT([]byte("R4hs!!a@")))
-	e.GET("/me", handler.GetMe(), middleware.JWT([]byte("R4hs!!a@")))
+	e.PUT("/users", handler.UpdateUser(), middleware.JWT([]byte(key)))
+	e.DELETE("/users", handler.DeleteByID(), middleware.JWT([]byte(key)))
+	e.GET("/users/username", handler.ShowUser(), middleware.JWT([]byte(key)))
+	e.GET("/me", handler.GetMe(), middleware.JWT([]byte(key)))
 	// e.GET("/users/:email", handler.Profile(), middleware.JWT([]byte(key)))
 
 }
@@ -136,20 +135,14 @@ func (us *userHandler) ShowUser() echo.HandlerFunc {
 
 func (us *userHandler) GetMe() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		var input GetMeFormat
-		id := c.QueryParam("id")
-		u64, err := strconv.ParseUint(id, 10, 32)
-		if err != nil {
-			return c.JSON(http.StatusBadRequest, FailResponse(err.Error()))
-		}
-		input.ID = jwt.ExtractIdToken(c)
-		if input.ID == 0 {
+		id := jwt.ExtractIdToken(c)
+		if id == 0 {
 			return c.JSON(http.StatusUnauthorized, map[string]interface{}{
-				"message": "cannot validate token",
+				"message": "Id is empty. Cannot get id.",
 			})
 		}
-		wa := uint(u64)
-		res, err := us.srv.GetMe(uint(wa))
+
+		res, err := us.srv.GetMe(id)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
 		}

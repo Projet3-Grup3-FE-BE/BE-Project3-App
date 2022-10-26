@@ -66,7 +66,7 @@ func ToDomain(i interface{}) domain.Core {
 		return domain.Core{ID: cnv.ID, Username: cnv.Username, Email: cnv.Email, Password: cnv.Password, Name: cnv.Name, Phone: cnv.Phone, Address: cnv.Address, ShopName: cnv.ShopName, ImageUrl: cnv.ImageUrl}
 	case GetUserFormat:
 		cnv := i.(GetUserFormat)
-		return domain.Core{ID: cnv.ID, Username: cnv.Username, Name: cnv.Name, Phone: cnv.Phone, Recipient_address: cnv.Recipient_address, ShopName: cnv.ShopName}
+		return domain.Core{ID: cnv.ID, Username: cnv.Username, Name: cnv.Name, Phone: cnv.Phone, ShopName: cnv.ShopName}
 	case GetMeFormat:
 		cnv := i.(GetMeFormat)
 		return domain.Core{ID: cnv.ID, Username: cnv.Username, Email: cnv.Email, Password: cnv.Password, Name: cnv.Name, Phone: cnv.Phone, Address: cnv.Address, ShopName: cnv.ShopName, ImageUrl: cnv.ImageUrl}

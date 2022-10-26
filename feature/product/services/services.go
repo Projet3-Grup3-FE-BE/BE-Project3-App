@@ -33,7 +33,7 @@ func (bs *productService) Insert(newData domain.Core, c echo.Context) (domain.Co
 		return domain.Core{}, errors.New("Failed. User not found. ")
 	}
 
-	newData.Shop_Name = userData.Shop_Name
+	newData.Shop_Name = userData.ShopName
 	newData.Id_User_Seller = idUser
 	res, err := bs.qry.Insert(newData)
 
@@ -68,7 +68,7 @@ func (bs *productService) Update(updatedData domain.Core, idproduct string, c ec
 				return domain.Core{}, errors.New("Failed. User not found. ")
 			}
 
-			updatedData.Shop_Name = userData.Shop_Name
+			updatedData.Shop_Name = userData.ShopName
 			updatedData.Id_User_Seller = idUser
 			resUpdate, err := bs.qry.Update(updatedData, uint(idproductUint))
 
