@@ -75,6 +75,18 @@ type GetDataRespons struct {
 	ShopName          string `json:"shop_name"`
 }
 
+type GetMeRespons struct {
+	ID       uint   `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
+	Phone    string `json:"phone"`
+	Address  string `json:"address"`
+	ShopName string `json:"shop_name"`
+	ImageUrl string `json:"image_url"`
+}
+
 func ToResponseLogin(core interface{}, token string, code string) interface{} {
 	var res interface{}
 	switch code {
@@ -135,6 +147,19 @@ func ToResponse(core interface{}, code string) interface{} {
 			Phone:             cnv.Phone,
 			Recipient_address: cnv.Recipient_address,
 			ShopName:          cnv.ShopName,
+		}
+	case "getMe":
+		cnv := core.(domain.Core)
+		res = GetMeRespons{
+			ID:       cnv.ID,
+			Username: cnv.Username,
+			Email:    cnv.Email,
+			Password: cnv.Password,
+			Name:     cnv.Name,
+			Phone:    cnv.Phone,
+			Address:  cnv.Address,
+			ShopName: cnv.ShopName,
+			ImageUrl: cnv.ImageUrl,
 		}
 	}
 	return res

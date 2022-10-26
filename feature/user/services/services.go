@@ -125,3 +125,13 @@ func (rs *repoService) GetUser(getuserdata domain.Core) (domain.Core, error) {
 
 	return res, nil
 }
+
+func (us *repoService) GetMe(ID uint) (domain.Core, error) {
+	res, err := us.qry.GetMe(ID)
+	if err != nil {
+		log.Error(err.Error())
+		return domain.Core{}, errors.New("no data")
+	}
+
+	return res, nil
+}

@@ -13,6 +13,16 @@ type Repository struct {
 	mock.Mock
 }
 
+// GetMe implements domain.Repository
+func (*Repository) GetMe(ID uint) (domain.Core, error) {
+	panic("unimplemented")
+}
+
+// GetUser implements domain.Repository
+func (*Repository) GetUser(getuserdata domain.Core) (domain.Core, error) {
+	panic("unimplemented")
+}
+
 // Delete provides a mock function with given fields: ID
 func (_m *Repository) Delete(ID uint) error {
 	ret := _m.Called(ID)

@@ -69,3 +69,13 @@ func (rq *repoQuery) GetUser(getuserdata domain.Core) (domain.Core, error) {
 	getuserdata = ToDomain(cnv)
 	return getuserdata, nil
 }
+
+func (rq *repoQuery) GetMe(ID uint) (domain.Core, error) {
+	var resQry User
+	if err := rq.db.First(&resQry, "ID = ?", ID).Error; err != nil {
+		return domain.Core{}, err
+	}
+	// selesai dari DB
+	res := ToDomain(resQry)
+	return res, nil
+}

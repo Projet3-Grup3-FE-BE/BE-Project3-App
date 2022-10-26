@@ -21,6 +21,7 @@ type Repository interface {
 	Delete(ID uint) error
 	Update(updateData Core) (Core, error)
 	GetUser(getuserdata Core) (Core, error)
+	GetMe(ID uint) (Core, error)
 }
 
 type Service interface {
@@ -30,6 +31,7 @@ type Service interface {
 	Delete(id uint) error
 	UpdateProfile(updateData Core) (Core, error)
 	GetUser(getuserdata Core) (Core, error)
+	GetMe(ID uint) (Core, error)
 }
 type Handler interface {
 	Register() echo.HandlerFunc
@@ -37,4 +39,5 @@ type Handler interface {
 	DeleteByID() echo.HandlerFunc
 	UpdateUser() echo.HandlerFunc
 	GetUser() echo.HandlerFunc
+	GetMe() echo.HandlerFunc
 }
