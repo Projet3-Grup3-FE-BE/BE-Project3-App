@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: mfaishal882/project3Team3Img:latest
+          tags: mfaishal882/project3team3img:latest
       - 
         name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
@@ -38,8 +38,8 @@ jobs:
           script: |
               docker stop proect3team3
               docker rm proect3team3
-              docker rmi mfaishal882/project3Team3Img
-              docker run --name proect3team3 --link mysqlAwsDocker -d -p 8000:8000 -e DB_USER=${{secrets.DB_USER}} -e DB_PWD=${{secrets.DB_PWD}} -e DB_HOST=${{secrets.DB_HOST}}  -e DB_PORT=${{secrets.DB_PORT}}  -e DB_NAME=${{secrets.DB_NAME}} -e JW_SECRET=${{secrets.JW_SECRET}} mfaishal882/project3Team3Img
+              docker rmi mfaishal882/project3team3img
+              docker run --name proect3team3 --link mysqlAwsDocker -d -p 8000:8000 -e DB_USER=${{secrets.DB_USER}} -e DB_PWD=${{secrets.DB_PWD}} -e DB_HOST=${{secrets.DB_HOST}}  -e DB_PORT=${{secrets.DB_PORT}}  -e DB_NAME=${{secrets.DB_NAME}} -e JW_SECRET=${{secrets.JW_SECRET}} mfaishal882/project3team3img
 
 
 
