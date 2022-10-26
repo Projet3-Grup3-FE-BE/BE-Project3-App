@@ -3,12 +3,12 @@ package delivery
 import (
 	"be_project3team3/config"
 	"be_project3team3/feature/user/domain"
-
-	// "log"
+	jwt "be_project3team3/utils/jwt"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
-	// "github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 var key string
@@ -26,10 +26,12 @@ func New(e *echo.Echo, srv domain.Service) {
 
 	e.POST("/register", handler.Register())
 	e.POST("/login", handler.LoginUser())
-	// e.GET("/users", handler.ShowAllUser())
+	e.PUT("/users", handler.UpdateUser(), middleware.JWT([]byte("R4hs!!a@")))
+	e.DELETE("/users", handler.DeleteByID(), middleware.JWT([]byte("R4hs!!a@")))
+	e.GET("/users/username", handler.ShowUser(), middleware.JWT([]byte("R4hs!!a@")))
+	e.GET("/me", handler.GetMe(), middleware.JWT([]byte("R4hs!!a@")))
 	// e.GET("/users/:email", handler.Profile(), middleware.JWT([]byte(key)))
-	// e.PUT("/users", handler.EditProfile(), middleware.JWT([]byte(key)))
-	// e.DELETE("/users", handler.DeleteUser(), middleware.JWT([]byte(key)))
+
 }
 
 // registrasi add user
@@ -64,6 +66,94 @@ func (us *userHandler) LoginUser() echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
 		}
 		token := us.srv.GenerateToken(res.ID)
-		return c.JSON(http.StatusCreated, SuccessLogin("berhasil login", token, ToResponse(res, "login")))
+		return c.JSON(http.StatusCreated, SuccessLogin("berhasil login", ToResponseLogin(res, token, "login")))
+	}
+}
+
+func (us *userHandler) UpdateUser() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		var input UpdateFormat
+		if err := c.Bind(&input); err != nil {
+			return c.JSON(http.StatusBadRequest, FailResponse("cannot bind input"))
+		}
+		input.ID = jwt.ExtractIdToken(c)
+		if input.ID == 0 {
+			return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+				"message": "cannot validate token",
+			})
+		}
+
+		cnv := ToDomain(input)
+		res, err := us.srv.UpdateProfile(cnv)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
+		}
+
+		return c.JSON(http.StatusCreated, SuccessResponse("berhasil update", ToResponse(res, "upd")))
+	}
+
+}
+
+func (us *userHandler) DeleteByID() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		id := jwt.ExtractIdToken(c)
+		if id == 0 {
+			return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+				"message": "cannot validate token",
+			})
+		}
+		err := us.srv.Delete(id)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
+		}
+
+		return c.JSON(http.StatusOK, SuccessDelete("success delete user"))
+	}
+}
+
+func (us *userHandler) ShowUser() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		var input GetUserFormat
+		if err := c.Bind(&input); err != nil {
+			return c.JSON(http.StatusBadRequest, FailResponse("cannot bind input"))
+		}
+		input.ID = jwt.ExtractIdToken(c)
+		if input.ID == 0 {
+			return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+				"message": "cannot validate token",
+			})
+		}
+
+		cnv := ToDomain(input)
+		res, err := us.srv.GetUser(cnv)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
+		}
+
+		return c.JSON(http.StatusCreated, SuccessResponse("berhasil Get data user", ToResponse(res, "getuser")))
+	}
+}
+
+func (us *userHandler) GetMe() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		var input GetMeFormat
+		id := c.QueryParam("id")
+		u64, err := strconv.ParseUint(id, 10, 32)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, FailResponse(err.Error()))
+		}
+		input.ID = jwt.ExtractIdToken(c)
+		if input.ID == 0 {
+			return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+				"message": "cannot validate token",
+			})
+		}
+		wa := uint(u64)
+		res, err := us.srv.GetMe(uint(wa))
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
+		}
+
+		return c.JSON(http.StatusOK, SuccessResponse("success get me", ToResponse(res, "getMe")))
 	}
 }

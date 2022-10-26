@@ -8,22 +8,36 @@ type Core struct {
 	Email             string
 	Password          string
 	Name              string
-	Alamat_pengiriman string
 	Phone             string
-	Bio               string
+	Address           string
+	ShopName          string
+	ImageUrl          string
+	Recipient_address string
 }
 
 type Repository interface {
 	Insert(newUser Core) (Core, error) //register
 	Login(newUser Core) (Core, error)
+	Delete(ID uint) error
+	Update(updateData Core) (Core, error)
+	GetUser(getuserdata Core) (Core, error)
+	GetMe(ID uint) (Core, error)
 }
 
 type Service interface {
 	Register(newUser Core) (Core, error)
 	LoginUser(newUser Core) (Core, error)
 	GenerateToken(id uint) string
+	Delete(id uint) error
+	UpdateProfile(updateData Core) (Core, error)
+	GetUser(getuserdata Core) (Core, error)
+	GetMe(ID uint) (Core, error)
 }
 type Handler interface {
 	Register() echo.HandlerFunc
 	LoginUser() echo.HandlerFunc
+	DeleteByID() echo.HandlerFunc
+	UpdateUser() echo.HandlerFunc
+	GetUser() echo.HandlerFunc
+	GetMe() echo.HandlerFunc
 }
