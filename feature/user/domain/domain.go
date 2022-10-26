@@ -3,16 +3,15 @@ package domain
 import "github.com/labstack/echo/v4"
 
 type Core struct {
-	ID                uint
-	Username          string
-	Email             string
-	Password          string
-	Name              string
-	Phone             string
-	Address           string
-	ShopName          string
-	ImageUrl          string
-	Recipient_address string
+	ID       uint
+	Username string
+	Email    string
+	Password string
+	Name     string
+	Phone    string
+	Address  string
+	ShopName string
+	ImageUrl string
 }
 
 type Repository interface {
