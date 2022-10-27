@@ -9,12 +9,22 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 var key string
 
 func InitJWT(c *config.AppConfig) {
 	key = c.JWSecret
+}
+
+func JWTMiddleware() echo.MiddlewareFunc {
+
+	return middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningMethod: middleware.AlgorithmHS256,
+		SigningKey:    []byte(config.JWT_SECRET),
+	})
+
 }
 
 func GenerateJWTToken(id uint) (string, error) {
@@ -40,7 +50,8 @@ func ExtractIdToken(c echo.Context) uint {
 	token := c.Get("user").(*jwt.Token)
 	if token.Valid {
 		claims := token.Claims.(jwt.MapClaims)
-		return uint(claims["id"].(float64))
+		id_user := claims["id_user"].(float64)
+		return uint(id_user)
 	}
 
 	return 0
