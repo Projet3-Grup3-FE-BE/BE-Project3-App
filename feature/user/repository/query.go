@@ -61,10 +61,12 @@ func (rq *repoQuery) Delete(ID uint) error {
 
 func (rq *repoQuery) GetUser(getuserdata domain.Core) (domain.Core, error) {
 	var cnv User
+	//log.Println("\n\n\n hasil input", getuserdata, "\n\n\n")
 	cnv = FromDomain(getuserdata)
-	if err := rq.db.Where("id = ?", cnv.ID).First(&cnv).Error; err != nil {
+	if err := rq.db.Where("username = ?", cnv.Username).First(&cnv).Error; err != nil {
 		return domain.Core{}, err
 	}
+	//log.Println("\n\n\n hasil query", cnv, "\n\n\n")
 	// selesai dari DB
 	getuserdata = ToDomain(cnv)
 	return getuserdata, nil
