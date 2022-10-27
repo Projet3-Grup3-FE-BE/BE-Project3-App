@@ -116,10 +116,6 @@ func (us *repoService) Delete(ID uint) error {
 }
 
 func (rs *repoService) GetUser(getuserdata domain.Core) (domain.Core, error) {
-	if getuserdata.Username != "" {
-		generate, _ := bcrypt.GenerateFromPassword([]byte(getuserdata.Username), 10)
-		getuserdata.Username = string(generate)
-	}
 
 	res, err := rs.qry.GetUser(getuserdata)
 	if err != nil {

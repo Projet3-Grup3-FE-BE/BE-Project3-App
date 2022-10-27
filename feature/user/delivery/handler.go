@@ -27,7 +27,7 @@ func New(e *echo.Echo, srv domain.Service) {
 	e.POST("/login", handler.LoginUser())
 	e.PUT("/users", handler.UpdateUser(), middleware.JWT([]byte(key)))
 	e.DELETE("/users", handler.DeleteByID(), middleware.JWT([]byte(key)))
-	e.GET("/users/username", handler.ShowUser(), middleware.JWT([]byte(key)))
+	e.GET("/users/:username", handler.ShowUser())
 	e.GET("/me", handler.GetMe(), middleware.JWT([]byte(key)))
 	// e.GET("/users/:email", handler.Profile(), middleware.JWT([]byte(key)))
 
@@ -75,12 +75,17 @@ func (us *userHandler) UpdateUser() echo.HandlerFunc {
 		if err := c.Bind(&input); err != nil {
 			return c.JSON(http.StatusBadRequest, FailResponse("cannot bind input"))
 		}
-		input.ID = jwt.ExtractIdToken(c)
-		if input.ID == 0 {
-			return c.JSON(http.StatusUnauthorized, map[string]interface{}{
-				"message": "cannot validate token",
-			})
+
+		err := jwt.IsAuthorized(c)
+		if err != nil {
+			return c.JSON(http.StatusUnauthorized, FailResponse(err.Error()))
 		}
+		// input.ID = jwt.ExtractIdToken(c)
+		// if input.ID == 0 {
+		// 	return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+		// 		"message": "cannot validate token",
+		// 	})
+		// }
 
 		cnv := ToDomain(input)
 		res, err := us.srv.UpdateProfile(cnv)
@@ -113,15 +118,13 @@ func (us *userHandler) DeleteByID() echo.HandlerFunc {
 func (us *userHandler) ShowUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		var input GetUserFormat
-		if err := c.Bind(&input); err != nil {
-			return c.JSON(http.StatusBadRequest, FailResponse("cannot bind input"))
+		input.Username = c.Param("username")
+
+		if input.Username == "" {
+			return c.JSON(http.StatusBadRequest, FailResponse("Username kosong."))
+
 		}
-		input.ID = jwt.ExtractIdToken(c)
-		if input.ID == 0 {
-			return c.JSON(http.StatusUnauthorized, map[string]interface{}{
-				"message": "cannot validate token",
-			})
-		}
+
 		// convert to show
 		cnv := ToDomain(input)
 		res, err := us.srv.GetUser(cnv)
@@ -129,7 +132,7 @@ func (us *userHandler) ShowUser() echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
 		}
 
-		return c.JSON(http.StatusCreated, SuccessResponse("berhasil Get data user", ToResponse(res, "getuser")))
+		return c.JSON(http.StatusCreated, SuccessResponse("berhasil Get data user", ToResponse(res, "getMe")))
 	}
 }
 
