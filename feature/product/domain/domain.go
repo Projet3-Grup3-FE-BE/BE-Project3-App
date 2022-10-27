@@ -14,6 +14,7 @@ type Core struct {
 	Image_Url      string
 	Stock          int
 	Shop_Name      string
+	Category       string
 	Id_User_Seller uint
 }
 

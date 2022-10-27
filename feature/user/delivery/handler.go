@@ -40,6 +40,10 @@ func (us *userHandler) Register() echo.HandlerFunc {
 		if err := c.Bind(&input); err != nil {
 			return c.JSON(http.StatusBadRequest, FailResponse("cannot bind input"))
 		}
+
+		// dummy url
+		input.ImageUrl = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"
+
 		cnv := ToDomain(input)
 		res, err := us.srv.Register(cnv)
 		if err != nil {
@@ -86,6 +90,9 @@ func (us *userHandler) UpdateUser() echo.HandlerFunc {
 		// 		"message": "cannot validate token",
 		// 	})
 		// }
+
+		// dummy url
+		input.ImageUrl = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"
 
 		cnv := ToDomain(input)
 		res, err := us.srv.UpdateProfile(cnv)

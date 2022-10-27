@@ -13,18 +13,21 @@ type productResponseFormat struct {
 	Image_Url      string `json:"image_url"`
 	Stock          int    `json:"stock"`
 	Shop_Name      string `json:"shop_name"`
+	Category       string `json:"category"`
 	Id_User_Seller uint   `json:"id_user_seller"`
 }
-type productCommentResponseFormat struct {
-	ID             uint   `json:"id"`
-	Product_Name   string `json:"product_name"`
-	Description    string `json:"description"`
-	Price          int    `json:"price"`
-	Image_Url      string `json:"image_url"`
-	Stock          int    `json:"stock"`
-	Shop_Name      string `json:"shop_name"`
-	Id_User_Seller uint   `json:"id_user_seller"`
-}
+
+// type productCommentResponseFormat struct {
+// 	ID             uint   `json:"id"`
+// 	Product_Name   string `json:"product_name"`
+// 	Description    string `json:"description"`
+// 	Price          int    `json:"price"`
+// 	Image_Url      string `json:"image_url"`
+// 	Stock          int    `json:"stock"`
+// 	Shop_Name      string `json:"shop_name"`
+// 	Category       string `json:"category"`
+// 	Id_User_Seller uint   `json:"id_user_seller"`
+// }
 
 func SuccessResponse(msg string, data interface{}) map[string]interface{} {
 	return map[string]interface{}{
@@ -64,6 +67,7 @@ func ToResponse(core interface{}, code string) interface{} {
 			Image_Url:      cnv.Image_Url,
 			Stock:          cnv.Stock,
 			Shop_Name:      cnv.Shop_Name,
+			Category:       cnv.Category,
 			Id_User_Seller: cnv.Id_User_Seller,
 		}
 		res = product
@@ -81,6 +85,7 @@ func ToResponse(core interface{}, code string) interface{} {
 					Image_Url:      val.Image_Url,
 					Stock:          val.Stock,
 					Shop_Name:      val.Shop_Name,
+					Category:       val.Category,
 					Id_User_Seller: val.Id_User_Seller,
 				})
 		}
