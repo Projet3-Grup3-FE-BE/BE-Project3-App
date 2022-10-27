@@ -75,12 +75,17 @@ func (us *userHandler) UpdateUser() echo.HandlerFunc {
 		if err := c.Bind(&input); err != nil {
 			return c.JSON(http.StatusBadRequest, FailResponse("cannot bind input"))
 		}
-		input.ID = jwt.ExtractIdToken(c)
-		if input.ID == 0 {
-			return c.JSON(http.StatusUnauthorized, map[string]interface{}{
-				"message": "cannot validate token",
-			})
+
+		err := jwt.IsAuthorized(c)
+		if err != nil {
+			return c.JSON(http.StatusUnauthorized, FailResponse(err.Error()))
 		}
+		// input.ID = jwt.ExtractIdToken(c)
+		// if input.ID == 0 {
+		// 	return c.JSON(http.StatusUnauthorized, map[string]interface{}{
+		// 		"message": "cannot validate token",
+		// 	})
+		// }
 
 		cnv := ToDomain(input)
 		res, err := us.srv.UpdateProfile(cnv)

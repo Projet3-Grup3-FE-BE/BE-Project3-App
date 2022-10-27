@@ -67,3 +67,15 @@ func ExtracShopNameToken(c echo.Context) string {
 
 	return ""
 }
+
+func IsAuthorized(c echo.Context) error {
+	id, exp := ExtractToken(c)
+
+	if id == 0 {
+		return errors.New("Request not authorized. Please check token. User not found.")
+	} else if time.Now().Unix() > exp {
+		return errors.New("Request not authorized. Please check token. Expired token.")
+	} else {
+		return nil
+	}
+}
