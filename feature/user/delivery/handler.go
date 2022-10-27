@@ -122,7 +122,7 @@ func (us *userHandler) ShowUser() echo.HandlerFunc {
 				"message": "cannot validate token",
 			})
 		}
-
+		// convert to show
 		cnv := ToDomain(input)
 		res, err := us.srv.GetUser(cnv)
 		if err != nil {
