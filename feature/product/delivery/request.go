@@ -11,6 +11,7 @@ type productInsertRequestFormat struct {
 	Image_Url      string `json:"image_url" form:"image_url"`
 	Stock          int    `json:"stock" form:"stock"`
 	Shop_Name      string `json:"shop_name" form:"shop_name"`
+	Category       string `json:"category" form:"category"`
 	Id_User_Seller uint   `json:"id_user_seller" form:"id_user_seller"`
 }
 
@@ -22,6 +23,7 @@ type productRequestFormat struct {
 	Image_Url      string `json:"image_url" form:"image_url"`
 	Stock          int    `json:"stock" form:"stock"`
 	Shop_Name      string `json:"shop_name" form:"shop_name"`
+	Category       string `json:"category" form:"category"`
 	Id_User_Seller uint   `json:"id_user_seller" form:"id_user_seller"`
 }
 
@@ -36,6 +38,7 @@ func ToDomain(i interface{}) domain.Core {
 			Image_Url:      cnv.Image_Url,
 			Stock:          cnv.Stock,
 			Shop_Name:      cnv.Shop_Name,
+			Category:       cnv.Category,
 			Id_User_Seller: cnv.Id_User_Seller,
 		}
 	case productRequestFormat:
@@ -47,7 +50,7 @@ func ToDomain(i interface{}) domain.Core {
 			Price:          cnv.Price,
 			Image_Url:      cnv.Image_Url,
 			Stock:          cnv.Stock,
-			Shop_Name:      cnv.Shop_Name,
+			Category:       cnv.Category,
 			Id_User_Seller: cnv.Id_User_Seller,
 		}
 	}

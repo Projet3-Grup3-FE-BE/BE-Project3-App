@@ -14,6 +14,7 @@ type Product struct {
 	Image_Url      string
 	Stock          int
 	Shop_Name      string
+	Category       string
 	Id_User_Seller uint
 }
 
@@ -26,6 +27,7 @@ func FromDomain(dom domain.Core) Product {
 		Image_Url:      dom.Image_Url,
 		Stock:          dom.Stock,
 		Shop_Name:      dom.Shop_Name,
+		Category:       dom.Category,
 		Id_User_Seller: dom.Id_User_Seller,
 	}
 }
@@ -39,6 +41,7 @@ func ToDomain(p Product) domain.Core {
 		Image_Url:      p.Image_Url,
 		Stock:          p.Stock,
 		Shop_Name:      p.Shop_Name,
+		Category:       p.Category,
 		Id_User_Seller: p.Id_User_Seller,
 	}
 }
@@ -53,6 +56,7 @@ func ToDomainArray(arrproduct []Product) []domain.Core {
 			Image_Url:      val.Image_Url,
 			Stock:          val.Stock,
 			Shop_Name:      val.Shop_Name,
+			Category:       val.Category,
 			Id_User_Seller: val.Id_User_Seller,
 		})
 	}
