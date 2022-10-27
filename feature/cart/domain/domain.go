@@ -4,7 +4,7 @@ import "github.com/labstack/echo/v4"
 
 type Core struct {
 	ID             uint
-	Id_user        int
+	Id_user        uint
 	Id_product     uint
 	Product_name   string
 	Price          uint

@@ -11,7 +11,7 @@ type PostDataCartFormat struct {
 	Sub_total      string `json:"sub_total" form:"sub_total"`
 	ImageUrl       string `json:"image_url" form:"image_url"`
 	Notes          string `json:"notes" form:"notes"`
-	Id_user        int    `json:"id_user" form:"id_user"`
+	Id_user        uint   `json:"id_user" form:"id_user"`
 	Id_product     uint   `json:"id_product" form:"id_product"`
 	Category       string `json:"category" form:"category"`
 	ShopName       string `json:"shopname" form:"shopname"`

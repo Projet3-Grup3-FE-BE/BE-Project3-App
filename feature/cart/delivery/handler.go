@@ -6,10 +6,13 @@ import (
 	"be_project3team3/utils/jwt"
 	"errors"
 	"net/http"
+
+	// "net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	log3 "github.com/labstack/gommon/log"
 )
 
 var key string
@@ -34,11 +37,13 @@ func New(e *echo.Echo, srv domain.Service) {
 // Done Add Cart
 func (us *userHandler) AddDataCart() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		log3.Print("\n\n\n tes data masuk echo", "\n\n\n")
 		var input PostDataCartFormat
 		if err := c.Bind(&input); err != nil {
 			return c.JSON(http.StatusBadRequest, FailResponse(errors.New("an invalid client request")))
 		}
-		input.Id_user = int(jwt.ExtractIdToken(c))
+		log3.Print("\n\n\ndata masuk", input, "\n\n\n")
+		input.Id_user = uint(jwt.ExtractIdToken(c))
 		cnv := ToDomain(input)
 		res, err := us.srv.AddCart(cnv)
 		if err != nil {

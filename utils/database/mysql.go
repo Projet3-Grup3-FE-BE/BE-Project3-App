@@ -2,8 +2,9 @@ package database
 
 import (
 	"be_project3team3/config"
+	cart "be_project3team3/feature/cart/repository"
 	rProduct "be_project3team3/feature/product/repository"
-	rUser "be_project3team3/feature/user/repository"
+	user "be_project3team3/feature/user/repository"
 	"fmt"
 
 	"github.com/labstack/gommon/log"
@@ -30,6 +31,7 @@ func InitDB(c *config.AppConfig) *gorm.DB {
 }
 
 func migrateDB(db *gorm.DB) {
-	db.AutoMigrate(&rUser.User{})
+	db.AutoMigrate(&user.User{})
+	db.AutoMigrate(&cart.Cart{})
 	db.AutoMigrate(&rProduct.Product{})
 }
