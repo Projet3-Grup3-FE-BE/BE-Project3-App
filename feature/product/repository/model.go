@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type product struct {
+type Product struct {
 	gorm.Model
 	Product_Name   string
 	Description    string
@@ -17,8 +17,8 @@ type product struct {
 	Id_User_Seller uint
 }
 
-func FromDomain(dom domain.Core) product {
-	return product{
+func FromDomain(dom domain.Core) Product {
+	return Product{
 		Model:          gorm.Model{ID: dom.ID},
 		Product_Name:   dom.Product_Name,
 		Description:    dom.Description,
@@ -30,7 +30,7 @@ func FromDomain(dom domain.Core) product {
 	}
 }
 
-func ToDomain(p product) domain.Core {
+func ToDomain(p Product) domain.Core {
 	return domain.Core{
 		ID:             p.ID,
 		Product_Name:   p.Product_Name,
@@ -43,7 +43,7 @@ func ToDomain(p product) domain.Core {
 	}
 }
 
-func ToDomainArray(arrproduct []product) []domain.Core {
+func ToDomainArray(arrproduct []Product) []domain.Core {
 	var res []domain.Core
 	for _, val := range arrproduct {
 		res = append(res, domain.Core{ID: val.ID,

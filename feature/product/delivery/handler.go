@@ -94,26 +94,28 @@ func (us *productHandler) Addproduct() echo.HandlerFunc {
 		} else {
 			log.Println("Authorized request.")
 		}
-		uploader = NewUploader()
 		var input productInsertRequestFormat
-		//content := c.FormValue("content")
+		// uploader = NewUploader()
+		// //content := c.FormValue("content")
+		// isSuccess := true
+		// file, er := c.FormFile("file")
+		// if er != nil {
+		// 	isSuccess = false
+		// } else {
+		// 	src, err := file.Open()
+		// 	if err != nil {
+		// 		isSuccess = false
+		// 	} else {
+		// 		resFile, err := upload(c, file.Filename, src)
+		// 		if err != nil {
+		// 			return c.JSON(http.StatusBadRequest, FailResponse("Berhasil Upload Images"))
+		// 		}
+		// 		input.Image_Url = resFile
+		// 	}
+		// 	defer src.Close()
+		// }
 		isSuccess := true
-		file, er := c.FormFile("file")
-		if er != nil {
-			isSuccess = false
-		} else {
-			src, err := file.Open()
-			if err != nil {
-				isSuccess = false
-			} else {
-				resFile, err := upload(c, file.Filename, src)
-				if err != nil {
-					return c.JSON(http.StatusBadRequest, FailResponse("Berhasil Upload Images"))
-				}
-				input.Image_Url = resFile
-			}
-			defer src.Close()
-		}
+		input.Image_Url = "https://ds393qgzrxwzn.cloudfront.net/resize/m720x480/cat1/img/images/0/ISzO90zLnp.jpg"
 		if isSuccess {
 			if err := c.Bind(&input); err != nil {
 				log.Println("Error Bind = ", err.Error())
@@ -150,25 +152,27 @@ func (us *productHandler) Updateproduct() echo.HandlerFunc {
 
 		var input productRequestFormat
 		paramID := c.Param("id")
-		uploader = NewUploader()
+		// uploader = NewUploader()
 
+		// isSuccess := true
+		// file, er := c.FormFile("file")
+		// if er != nil {
+		// 	isSuccess = false
+		// } else {
+		// 	src, err := file.Open()
+		// 	if err != nil {
+		// 		isSuccess = false
+		// 	} else {
+		// 		resFile, err := upload(c, file.Filename, src)
+		// 		if err != nil {
+		// 			return c.JSON(http.StatusBadRequest, FailResponse("Berhasil Upload Images"))
+		// 		}
+		// 		input.Image_Url = resFile
+		// 	}
+		// 	defer src.Close()
+		// }
 		isSuccess := true
-		file, er := c.FormFile("file")
-		if er != nil {
-			isSuccess = false
-		} else {
-			src, err := file.Open()
-			if err != nil {
-				isSuccess = false
-			} else {
-				resFile, err := upload(c, file.Filename, src)
-				if err != nil {
-					return c.JSON(http.StatusBadRequest, FailResponse("Berhasil Upload Images"))
-				}
-				input.Image_Url = resFile
-			}
-			defer src.Close()
-		}
+		input.Image_Url = "https://ds393qgzrxwzn.cloudfront.net/resize/m720x480/cat1/img/images/0/ISzO90zLnp.jpg"
 		if isSuccess {
 
 			if err := c.Bind(&input); err != nil {
