@@ -20,7 +20,7 @@ func New(dbConn *gorm.DB) domain.RepositoryInterface {
 }
 
 func (rq *repoQuery) Get(ID string) (domain.Core, error) {
-	var resQry product
+	var resQry Product
 	if err := rq.db.Where("ID = ?", ID).First(&resQry).Error; err != nil {
 		return domain.Core{}, err
 	}
@@ -48,7 +48,7 @@ func (rq *repoQuery) Get(ID string) (domain.Core, error) {
 // }
 
 func (rq *repoQuery) GetAll() ([]domain.Core, error) {
-	var resQry []product
+	var resQry []Product
 	if err := rq.db.Find(&resQry).Error; err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (rq *repoQuery) GetAll() ([]domain.Core, error) {
 }
 
 func (rq *repoQuery) GetAllByCategory(category string) ([]domain.Core, error) {
-	var resQry []product
+	var resQry []Product
 	if err := rq.db.Where("category = ?", category).Find(&resQry).Error; err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (rq *repoQuery) GetAllByCategory(category string) ([]domain.Core, error) {
 }
 
 func (rq *repoQuery) GetShop(id_user_seller string) ([]domain.Core, error) {
-	var resQry []product
+	var resQry []Product
 	if err := rq.db.Where("id_user_seller = ?", id_user_seller).Find(&resQry).Error; err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (rq *repoQuery) GetShop(id_user_seller string) ([]domain.Core, error) {
 }
 
 func (rq *repoQuery) GetShopByCategory(id_user_seller string, category string) ([]domain.Core, error) {
-	var resQry []product
+	var resQry []Product
 	if err := rq.db.Where("id_user_seller = ? AND category = ?", id_user_seller, category).Find(&resQry).Error; err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (rq *repoQuery) GetUser(idUser uint) (userDom.Core, error) {
 }
 
 func (rq *repoQuery) Insert(newData domain.Core) (domain.Core, error) {
-	var newInput product
+	var newInput Product
 	newInput = FromDomain(newData)
 	if err := rq.db.Create(&newInput).Error; err != nil {
 		return domain.Core{}, err
@@ -110,7 +110,7 @@ func (rq *repoQuery) Insert(newData domain.Core) (domain.Core, error) {
 }
 
 func (rq *repoQuery) Update(updatedData domain.Core, ID uint) (domain.Core, error) {
-	var currentData product
+	var currentData Product
 
 	// validasi jika data tidak ditemukan
 	err := rq.db.Where("id = ?", ID).First(&currentData).Error
@@ -141,7 +141,7 @@ func (rq *repoQuery) Update(updatedData domain.Core, ID uint) (domain.Core, erro
 }
 
 func (rq *repoQuery) Delete(ID string) (domain.Core, error) {
-	var res product
+	var res Product
 	if err := rq.db.First(&res, "id=?", ID).Error; err != nil {
 		return domain.Core{}, err
 	}
