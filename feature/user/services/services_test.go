@@ -3,7 +3,7 @@ package services
 import (
 	"be_project3team3/config"
 	"be_project3team3/feature/user/domain"
-	"be_project3team3/mocks"
+	"be_project3team3/feature/user/mocks"
 	"errors"
 	"testing"
 
