@@ -29,6 +29,7 @@ func NewConfig() *AppConfig {
 func initConfig() *AppConfig {
 	var app AppConfig
 
+	//
 	// err := godotenv.Load("config.env")
 	// if err != nil {
 	// 	log.Error("config error :", err.Error())
