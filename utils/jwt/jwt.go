@@ -50,8 +50,7 @@ func ExtractIdToken(c echo.Context) uint {
 	token := c.Get("user").(*jwt.Token)
 	if token.Valid {
 		claims := token.Claims.(jwt.MapClaims)
-		id_user := claims["id_user"].(float64)
-		return uint(id_user)
+		return uint(claims["id"].(float64))
 	}
 
 	return 0

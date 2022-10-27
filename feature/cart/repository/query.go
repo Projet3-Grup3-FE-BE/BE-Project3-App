@@ -21,21 +21,27 @@ func New(dbConn *gorm.DB) domain.Repository {
 // Insert implements domain.Repository
 // Done Insert
 func (rq *repoQuery) Insert(newCart domain.Core) (domain.Core, error) {
+	log.Println("\n\n\ndata masuk Insert 1", newCart, "\n\n\n")
 	var cnv Cart = FromDomain(newCart)
 	var compare Product
-	if err := rq.db.Where("id_user = ? AND id = ?", cnv.Id_user, cnv.Id_product).First(&compare).Error; err == nil {
+	err := rq.db.Where("id_user = ? AND id = ?", cnv.Id_user, cnv.Id_product).First(&compare).Error
+	if err == nil {
 		log.Print(errors.New("cannot buy own product"))
 		return domain.Core{}, errors.New("cannot buy own product")
 	}
-
-	if err := rq.db.Where("id = ? AND product_qty>=?", cnv.Id_product, cnv.Qty).First(&compare).Error; err != nil {
+	log.Println("\n\n\ndata masuk Insert 2", err, "\n\n\n")
+	err2 := rq.db.Where("id = ? AND qty>=?", cnv.Id_product, cnv.Qty).First(&compare).Error
+	if err2 != nil {
 		log.Print(errors.New("stock product tidak cukup"))
 		return domain.Core{}, errors.New("stock product tidak cukup")
 	}
+	log.Println("\n\n\ndata masuk Insert 3", err2, "\n\n\n")
 
-	if err := rq.db.Select("id_product", "id_user", "carts.product_qty").Create(&cnv).Error; err != nil {
+	err3 := rq.db.Select("id_product", "id_user", "carts.qty").Create(&cnv).Error
+	if err != nil {
 		return domain.Core{}, err
 	}
+	log.Println("\n\n\ndata masuk Insert 3", err3, "\n\n\n")
 
 	// selesai dari DB
 	newCart = ToDomain(cnv)

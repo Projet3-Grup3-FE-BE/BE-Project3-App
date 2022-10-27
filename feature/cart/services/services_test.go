@@ -13,11 +13,11 @@ import (
 func TestAddCart(t *testing.T) {
 	repo := mocks.NewRepository(t)
 	t.Run("Sukses Add Cart", func(t *testing.T) {
-		repo.On("Insert", mock.Anything).Return(domain.Core{ID: uint(1), Id_product: uint(1), Id_user: int(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg",
+		repo.On("Insert", mock.Anything).Return(domain.Core{ID: uint(1), Id_product: uint(1), Id_user: uint(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg",
 			Qty: 10, Sub_total: "2", Notes: "selalu siap", ShopName: "adidas shop", Id_user_seller: uint(1)}, nil).Once()
 
 		srv := New(repo)
-		input := domain.Core{Id_product: uint(1), Id_user: int(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg"}
+		input := domain.Core{Id_product: uint(1), Id_user: uint(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg"}
 		res, err := srv.AddCart(input)
 		assert.Nil(t, err)
 		assert.NotEmpty(t, res)
@@ -37,7 +37,7 @@ func TestAddCart(t *testing.T) {
 func TestDeleteByID(t *testing.T) {
 	repo := mocks.NewRepository(t)
 	t.Run("Sukses Delete Cart", func(t *testing.T) {
-		repo.On("Delete", mock.Anything).Return(domain.Core{ID: uint(1), Id_user: int(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg",
+		repo.On("Delete", mock.Anything).Return(domain.Core{ID: uint(1), Id_user: uint(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg",
 			Qty: 10, Sub_total: "2", Notes: "selalu siap", ShopName: "adidas shop", Id_user_seller: uint(1)}, nil).Once()
 		srv := New(repo)
 		res, err := srv.Delete(1)
@@ -58,7 +58,7 @@ func TestDeleteByID(t *testing.T) {
 func TestGetCart(t *testing.T) {
 	repo := mocks.NewRepository(t)
 	t.Run("Sukses Get Cart", func(t *testing.T) {
-		repo.On("GetCart", mock.Anything).Return([]domain.Core{{ID: uint(1), Id_user: int(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg",
+		repo.On("GetCart", mock.Anything).Return([]domain.Core{{ID: uint(1), Id_user: uint(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg",
 			Qty: 10, Sub_total: "2", Notes: "selalu siap", ShopName: "adidas shop", Id_user_seller: uint(1)}}, nil).Once()
 		srv := New(repo)
 		res, err := srv.GetCart(1)
@@ -79,10 +79,10 @@ func TestGetCart(t *testing.T) {
 func TestUpdateCart(t *testing.T) {
 	repo := mocks.NewRepository(t)
 	t.Run("Sukses Update Cart", func(t *testing.T) {
-		repo.On("Update", mock.Anything).Return(domain.Core{ID: uint(1), Id_product: uint(1), Id_user: int(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg",
+		repo.On("Update", mock.Anything).Return(domain.Core{ID: uint(1), Id_product: uint(1), Id_user: uint(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg",
 			Qty: 10, Sub_total: "2", Notes: "selalu siap", ShopName: "adidas shop", Id_user_seller: uint(1)}, nil).Once()
 		srv := New(repo)
-		input := domain.Core{Id_product: uint(1), Id_user: int(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg"}
+		input := domain.Core{Id_product: uint(1), Id_user: uint(1), Product_name: "adidas", Price: 20000, ImageUrl: "srv.jpg"}
 		res, err := srv.UpdateCart(input)
 		assert.Nil(t, err)
 		assert.NotEmpty(t, res)
