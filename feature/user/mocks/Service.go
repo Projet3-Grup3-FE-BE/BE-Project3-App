@@ -5,11 +5,8 @@ package mocks
 import (
 	domain "be_project3team3/feature/user/domain"
 
-<<<<<<< HEAD
-=======
 	echo "github.com/labstack/echo/v4"
 
->>>>>>> order, fix, s3
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -109,15 +106,6 @@ func (_m *Service) LoginUser(newUser domain.Core) (domain.Core, error) {
 	return r0, r1
 }
 
-<<<<<<< HEAD
-// Register provides a mock function with given fields: newUser
-func (_m *Service) Register(newUser domain.Core) (domain.Core, error) {
-	ret := _m.Called(newUser)
-
-	var r0 domain.Core
-	if rf, ok := ret.Get(0).(func(domain.Core) domain.Core); ok {
-		r0 = rf(newUser)
-=======
 // Register provides a mock function with given fields: newUser, c
 func (_m *Service) Register(newUser domain.Core, c echo.Context) (domain.Core, error) {
 	ret := _m.Called(newUser, c)
@@ -125,19 +113,13 @@ func (_m *Service) Register(newUser domain.Core, c echo.Context) (domain.Core, e
 	var r0 domain.Core
 	if rf, ok := ret.Get(0).(func(domain.Core, echo.Context) domain.Core); ok {
 		r0 = rf(newUser, c)
->>>>>>> order, fix, s3
 	} else {
 		r0 = ret.Get(0).(domain.Core)
 	}
 
 	var r1 error
-<<<<<<< HEAD
-	if rf, ok := ret.Get(1).(func(domain.Core) error); ok {
-		r1 = rf(newUser)
-=======
 	if rf, ok := ret.Get(1).(func(domain.Core, echo.Context) error); ok {
 		r1 = rf(newUser, c)
->>>>>>> order, fix, s3
 	} else {
 		r1 = ret.Error(1)
 	}
