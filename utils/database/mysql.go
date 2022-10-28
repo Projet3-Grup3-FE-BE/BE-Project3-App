@@ -2,6 +2,7 @@ package database
 
 import (
 	"be_project3team3/config"
+	cart "be_project3team3/feature/cart/repository"
 	rOrder "be_project3team3/feature/order/repository"
 	rProduct "be_project3team3/feature/product/repository"
 	rUser "be_project3team3/feature/user/repository"
@@ -32,6 +33,7 @@ func InitDB(c *config.AppConfig) *gorm.DB {
 
 func migrateDB(db *gorm.DB) {
 	db.AutoMigrate(&rUser.User{})
+	db.AutoMigrate(&cart.Cart{})
 	db.AutoMigrate(&rProduct.Product{})
 	db.AutoMigrate(&rOrder.Order{})
 }
