@@ -6,9 +6,9 @@ import (
 
 type PostDataCartFormat struct {
 	Product_name   string `json:"product_name" form:"product_name"`
-	Price          uint   `json:"price" form:"price"`
-	Qty            uint   `json:"qty" form:"qty"`
-	Sub_total      string `json:"sub_total" form:"sub_total"`
+	Price          int    `json:"price" form:"price"`
+	Qty            int    `json:"qty" form:"qty"`
+	Sub_total      int    `json:"sub_total" form:"sub_total"`
 	ImageUrl       string `json:"image_url" form:"image_url"`
 	Notes          string `json:"notes" form:"notes"`
 	Id_user        uint   `json:"id_user" form:"id_user"`
@@ -20,8 +20,8 @@ type PostDataCartFormat struct {
 
 type UpdateCartFormat struct {
 	ID        uint   `json:"id" form:"id"`
-	Qty       uint   `json:"qty" form:"qty"`
-	Sub_total string `json:"sub_total" form:"sub_total"`
+	Qty       int    `json:"qty" form:"qty"`
+	Sub_total int    `json:"sub_total" form:"sub_total"`
 	Notes     string `json:"notes" form:"notes"`
 }
 

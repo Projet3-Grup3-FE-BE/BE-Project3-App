@@ -12,7 +12,6 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	log3 "github.com/labstack/gommon/log"
 )
 
 var key string
@@ -28,22 +27,20 @@ func InitJWT(c *config.AppConfig) {
 func New(e *echo.Echo, srv domain.Service) {
 	handler := userHandler{srv: srv}
 
-	e.POST("/carts", handler.AddDataCart(), middleware.JWT([]byte("R4hs!!a@")))
-	e.GET("/carts/:id", handler.GetCart(), middleware.JWT([]byte("R4hs!!a@")))
-	e.PUT("/carts/:id", handler.UpdateCart(), middleware.JWT([]byte("R4hs!!a@")))
-	e.DELETE("/carts/:id", handler.DeleteByID(), middleware.JWT([]byte("R4hs!!a@")))
+	e.POST("/carts", handler.AddDataCart(), middleware.JWT([]byte(key)))
+	e.GET("/carts", handler.GetCart(), middleware.JWT([]byte(key)))
+	e.PUT("/carts/:id", handler.UpdateCart(), middleware.JWT([]byte(key)))
+	e.DELETE("/carts/:id", handler.DeleteByID(), middleware.JWT([]byte(key)))
 }
 
 // Done Add Cart
 func (us *userHandler) AddDataCart() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		log3.Print("\n\n\n tes data masuk echo", "\n\n\n")
 		var input PostDataCartFormat
 		if err := c.Bind(&input); err != nil {
 			return c.JSON(http.StatusBadRequest, FailResponse(errors.New("an invalid client request")))
 		}
-		log3.Print("\n\n\ndata masuk", input, "\n\n\n")
-		input.Id_user = uint(jwt.ExtractIdToken(c))
+		input.Id_user = jwt.ExtractIdToken(c)
 		cnv := ToDomain(input)
 		res, err := us.srv.AddCart(cnv)
 		if err != nil {

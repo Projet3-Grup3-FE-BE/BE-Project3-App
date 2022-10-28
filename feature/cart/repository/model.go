@@ -25,9 +25,9 @@ type Product struct {
 	Id_user_seller uint
 	Product_name   string
 	Description    string
-	Price          uint
+	Price          int
 	ImageUrl       string
-	Stock          uint
+	Stock          int
 	Category       string
 	ShopName       string `gorm:"-:migration" gorm:"<-"`
 	Carts          []Cart `gorm:"foreignKey:Id_product"`
@@ -38,10 +38,10 @@ type Cart struct {
 	Id_user        uint
 	Id_product     uint
 	Product_name   string `gorm:"-:migration" gorm:"->"`
-	Price          uint   `gorm:"-:migration" gorm:"->"`
+	Price          int    `gorm:"-:migration" gorm:"->"`
 	ImageUrl       string `gorm:"-:migration" gorm:"->"`
-	Qty            uint
-	Sub_total      string
+	Qty            int
+	Sub_total      int
 	Notes          string
 	ShopName       string `gorm:"-:migration" gorm:"->"`
 	Id_user_seller uint

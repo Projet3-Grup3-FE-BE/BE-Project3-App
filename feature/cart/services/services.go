@@ -3,7 +3,8 @@ package services
 import (
 	"be_project3team3/feature/cart/domain"
 	"errors"
-	log2 "log"
+
+	// log2 "log"
 
 	"strings"
 
@@ -23,9 +24,7 @@ type repoService struct {
 // Done Add Cart
 // Register implements domain.Service
 func (rs *repoService) AddCart(newCart domain.Core) (domain.Core, error) {
-	log2.Println("\n\n\ndata service new cart masuk", newCart, "\n\n\n")
 	res, err := rs.qry.Insert(newCart)
-	log2.Println("\n\n\n tampil res cart", res, "\n\n\n")
 	if err != nil {
 		if strings.Contains(err.Error(), "connot") {
 			return domain.Core{}, errors.New("cannot buy own product")

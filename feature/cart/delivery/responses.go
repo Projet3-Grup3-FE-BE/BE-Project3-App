@@ -32,9 +32,9 @@ func SuccessLogin(msg string, data interface{}) map[string]interface{} {
 type PostCartRespons struct {
 	ID             uint   `json:"id"`
 	Product_name   string `json:"product_name"`
-	Price          uint   `json:"price"`
-	Qty            uint   `json:"qty"`
-	Sub_total      string `json:"sub_total"`
+	Price          int    `json:"price"`
+	Qty            int    `json:"qty"`
+	Sub_total      int    `json:"sub_total"`
 	ImageUrl       string `json:"image_url"`
 	Notes          string `json:"notes"`
 	Id_user_buyer  uint   `json:"id_user_buyer"`
@@ -47,24 +47,24 @@ type PostCartRespons struct {
 type GetCartIDRespons struct {
 	ID             uint   `json:"id"`
 	Product_name   string `json:"product_name"`
-	Price          uint   `json:"price"`
-	Qty            uint   `json:"qty"`
-	Sub_total      string `json:"sub_total"`
+	Price          int    `json:"price"`
+	Qty            int    `json:"qty"`
+	Sub_total      int    `json:"sub_total"`
 	ImageUrl       string `json:"image_url"`
 	Notes          string `json:"notes"`
 	Category       string `json:"category"`
 	ShopName       string `json:"shopname"`
 	Id_product     uint   `json:"id_product"`
 	Id_user_seller uint   `json:"id_user_seller"`
-	Id_user_buyer  uint   `json:"id_user"`
+	Id_user        uint   `json:"id_user"`
 }
 
 type UpdateCartRespons struct {
 	ID             uint   `json:"id"`
 	Product_name   string `json:"product_name"`
-	Price          uint   `json:"price"`
-	Qty            uint   `json:"qty"`
-	Sub_total      string `json:"sub_total"`
+	Price          int    `json:"price"`
+	Qty            int    `json:"qty"`
+	Sub_total      int    `json:"sub_total"`
 	ImageUrl       string `json:"image_url"`
 	Notes          string `json:"notes"`
 	Id_user_buyer  uint   `json:"id_user_buyer"`
@@ -130,7 +130,7 @@ func ToResponseProduct(core interface{}, code string) interface{} {
 			ShopName:       cnv.ShopName,
 			Id_product:     cnv.Id_product,
 			Id_user_seller: cnv.Id_user_seller,
-			// Id_user_buyer: cnv.Id_user_buyer,
+			Id_user:        cnv.Id_user,
 		})
 	}
 	res = arr

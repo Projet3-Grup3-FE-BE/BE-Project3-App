@@ -7,10 +7,10 @@ type Core struct {
 	Id_user        uint
 	Id_product     uint
 	Product_name   string
-	Price          uint
+	Price          int
 	ImageUrl       string
-	Qty            uint
-	Sub_total      string
+	Qty            int
+	Sub_total      int
 	Notes          string
 	ShopName       string
 	Id_user_seller uint
