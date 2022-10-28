@@ -12,6 +12,22 @@ type Handler struct {
 	mock.Mock
 }
 
+// AddDataCart provides a mock function with given fields:
+func (_m *Handler) AddDataCart() echo.HandlerFunc {
+	ret := _m.Called()
+
+	var r0 echo.HandlerFunc
+	if rf, ok := ret.Get(0).(func() echo.HandlerFunc); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(echo.HandlerFunc)
+		}
+	}
+
+	return r0
+}
+
 // DeleteByID provides a mock function with given fields:
 func (_m *Handler) DeleteByID() echo.HandlerFunc {
 	ret := _m.Called()
@@ -28,8 +44,8 @@ func (_m *Handler) DeleteByID() echo.HandlerFunc {
 	return r0
 }
 
-// LoginUser provides a mock function with given fields:
-func (_m *Handler) LoginUser() echo.HandlerFunc {
+// GetCart provides a mock function with given fields:
+func (_m *Handler) GetCart() echo.HandlerFunc {
 	ret := _m.Called()
 
 	var r0 echo.HandlerFunc
@@ -44,24 +60,8 @@ func (_m *Handler) LoginUser() echo.HandlerFunc {
 	return r0
 }
 
-// Register provides a mock function with given fields:
-func (_m *Handler) Register() echo.HandlerFunc {
-	ret := _m.Called()
-
-	var r0 echo.HandlerFunc
-	if rf, ok := ret.Get(0).(func() echo.HandlerFunc); ok {
-		r0 = rf()
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(echo.HandlerFunc)
-		}
-	}
-
-	return r0
-}
-
-// UpdateUser provides a mock function with given fields:
-func (_m *Handler) UpdateUser() echo.HandlerFunc {
+// UpdateCart provides a mock function with given fields:
+func (_m *Handler) UpdateCart() echo.HandlerFunc {
 	ret := _m.Called()
 
 	var r0 echo.HandlerFunc

@@ -9,12 +9,22 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 var key string
 
 func InitJWT(c *config.AppConfig) {
 	key = c.JWSecret
+}
+
+func JWTMiddleware() echo.MiddlewareFunc {
+
+	return middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningMethod: middleware.AlgorithmHS256,
+		SigningKey:    []byte(config.JWT_SECRET),
+	})
+
 }
 
 func GenerateJWTToken(id uint, shopname string) (string, error) {

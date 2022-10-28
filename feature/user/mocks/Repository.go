@@ -13,16 +13,6 @@ type Repository struct {
 	mock.Mock
 }
 
-// GetMe implements domain.Repository
-func (*Repository) GetMe(ID uint) (domain.Core, error) {
-	panic("unimplemented")
-}
-
-// GetUser implements domain.Repository
-func (*Repository) GetUser(getuserdata domain.Core) (domain.Core, error) {
-	panic("unimplemented")
-}
-
 // Delete provides a mock function with given fields: ID
 func (_m *Repository) Delete(ID uint) error {
 	ret := _m.Called(ID)
@@ -35,6 +25,48 @@ func (_m *Repository) Delete(ID uint) error {
 	}
 
 	return r0
+}
+
+// GetMe provides a mock function with given fields: ID
+func (_m *Repository) GetMe(ID uint) (domain.Core, error) {
+	ret := _m.Called(ID)
+
+	var r0 domain.Core
+	if rf, ok := ret.Get(0).(func(uint) domain.Core); ok {
+		r0 = rf(ID)
+	} else {
+		r0 = ret.Get(0).(domain.Core)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(uint) error); ok {
+		r1 = rf(ID)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// GetUser provides a mock function with given fields: getuserdata
+func (_m *Repository) GetUser(getuserdata domain.Core) (domain.Core, error) {
+	ret := _m.Called(getuserdata)
+
+	var r0 domain.Core
+	if rf, ok := ret.Get(0).(func(domain.Core) domain.Core); ok {
+		r0 = rf(getuserdata)
+	} else {
+		r0 = ret.Get(0).(domain.Core)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(domain.Core) error); ok {
+		r1 = rf(getuserdata)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // Insert provides a mock function with given fields: newUser

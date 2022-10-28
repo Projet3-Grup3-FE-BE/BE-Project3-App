@@ -41,6 +41,48 @@ func (_m *Service) GenerateToken(id uint) string {
 	return r0
 }
 
+// GetMe provides a mock function with given fields: ID
+func (_m *Service) GetMe(ID uint) (domain.Core, error) {
+	ret := _m.Called(ID)
+
+	var r0 domain.Core
+	if rf, ok := ret.Get(0).(func(uint) domain.Core); ok {
+		r0 = rf(ID)
+	} else {
+		r0 = ret.Get(0).(domain.Core)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(uint) error); ok {
+		r1 = rf(ID)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// GetUser provides a mock function with given fields: getuserdata
+func (_m *Service) GetUser(getuserdata domain.Core) (domain.Core, error) {
+	ret := _m.Called(getuserdata)
+
+	var r0 domain.Core
+	if rf, ok := ret.Get(0).(func(domain.Core) domain.Core); ok {
+		r0 = rf(getuserdata)
+	} else {
+		r0 = ret.Get(0).(domain.Core)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(domain.Core) error); ok {
+		r1 = rf(getuserdata)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // LoginUser provides a mock function with given fields: newUser
 func (_m *Service) LoginUser(newUser domain.Core) (domain.Core, error) {
 	ret := _m.Called(newUser)
