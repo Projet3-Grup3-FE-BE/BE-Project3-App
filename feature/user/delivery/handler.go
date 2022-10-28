@@ -42,10 +42,21 @@ func (us *userHandler) Register() echo.HandlerFunc {
 		}
 
 		// dummy url
-		input.ImageUrl = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"
+		// input.ImageUrl = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"
+
+		// // upload foto
+		// file, _ := c.FormFile("file")
+		// if file != nil {
+		// 	res, err := helper.UploadProfileProduct(c)
+		// 	if err != nil {
+		// 		return c.JSON(http.StatusBadRequest, FailResponse("Registration Failed. Cannot Upload Data."))
+		// 	}
+		// 	log.Print(res)
+		// 	input.ImageUrl = res
+		// }
 
 		cnv := ToDomain(input)
-		res, err := us.srv.Register(cnv)
+		res, err := us.srv.Register(cnv, c)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
 		}
@@ -95,7 +106,7 @@ func (us *userHandler) UpdateUser() echo.HandlerFunc {
 		input.ImageUrl = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"
 
 		cnv := ToDomain(input)
-		res, err := us.srv.UpdateProfile(cnv)
+		res, err := us.srv.UpdateProfile(cnv, c)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
 		}
