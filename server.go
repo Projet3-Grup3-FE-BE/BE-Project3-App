@@ -2,6 +2,9 @@ package main
 
 import (
 	"be_project3team3/config"
+	dOrder "be_project3team3/feature/order/delivery"
+	rOrder "be_project3team3/feature/order/repository"
+	sOrder "be_project3team3/feature/order/services"
 	dProduct "be_project3team3/feature/product/delivery"
 	rProduct "be_project3team3/feature/product/repository"
 	sProduct "be_project3team3/feature/product/services"
@@ -23,9 +26,11 @@ func main() {
 
 	mdlUser := rUser.New(db)
 	mdlProduct := rProduct.New(db)
+	mdlOrder := rOrder.New(db)
 
 	serUser := sUser.New(mdlUser)
 	serProduct := sProduct.New(mdlProduct)
+	serOrder := sOrder.New(mdlOrder)
 
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORS())
@@ -33,6 +38,7 @@ func main() {
 
 	dUser.New(e, serUser)
 	dProduct.New(e, serProduct)
+	dOrder.New(e, serOrder)
 
 	log.Fatal(e.Start(":8000"))
 

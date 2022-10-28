@@ -14,8 +14,22 @@ type Order struct {
 	ShopName        string
 	GrossAmount     int
 	OrderStatus     string
+	SnapToken       string
+	RedirectedUrl   string
 	IdUserSeller    uint
 	IdUserBuyer     uint
+}
+
+type Product struct {
+	gorm.Model
+	ProductName  string
+	Description  string
+	Price        int
+	ImageUrl     string
+	Stock        int
+	ShopName     string
+	Category     string
+	IdUserSeller uint
 }
 
 func FromDomain(dom domain.Core) Order {
@@ -27,6 +41,8 @@ func FromDomain(dom domain.Core) Order {
 		ShopName:        dom.ShopName,
 		GrossAmount:     dom.GrossAmount,
 		OrderStatus:     dom.OrderStatus,
+		SnapToken:       dom.SnapToken,
+		RedirectedUrl:   dom.RedirectedUrl,
 		IdUserSeller:    dom.IdUserSeller,
 		IdUserBuyer:     dom.IdUserBuyer,
 	}
@@ -41,6 +57,8 @@ func ToDomain(p Order) domain.Core {
 		ShopName:        p.ShopName,
 		GrossAmount:     p.GrossAmount,
 		OrderStatus:     p.OrderStatus,
+		SnapToken:       p.SnapToken,
+		RedirectedUrl:   p.RedirectedUrl,
 		IdUserSeller:    p.IdUserSeller,
 		IdUserBuyer:     p.IdUserBuyer,
 	}

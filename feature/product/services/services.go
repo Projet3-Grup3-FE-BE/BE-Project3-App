@@ -2,6 +2,7 @@ package services
 
 import (
 	"be_project3team3/feature/product/domain"
+	"be_project3team3/helper"
 	"be_project3team3/utils/jwt"
 	"errors"
 	loggo "log"
@@ -31,6 +32,19 @@ func (bs *productService) Insert(newData domain.Core, c echo.Context) (domain.Co
 	userData, err := bs.qry.GetUser(idUser)
 	if err != nil {
 		return domain.Core{}, errors.New("Failed. User not found. ")
+	}
+
+	// default
+	newData.Image_Url = "https://project3bucker.s3.ap-southeast-1.amazonaws.com/adidas-1.jpg"
+	// upload foto
+	file, _ := c.FormFile("file")
+	if file != nil {
+		res, err := helper.UploadProfileProduct(c)
+		if err != nil {
+			return domain.Core{}, errors.New("Registration Failed. Cannot Upload Data.")
+		}
+		log.Print(res)
+		newData.Image_Url = res
 	}
 
 	newData.Shop_Name = userData.ShopName
@@ -66,6 +80,19 @@ func (bs *productService) Update(updatedData domain.Core, idproduct string, c ec
 			userData, err := bs.qry.GetUser(idUser)
 			if err != nil {
 				return domain.Core{}, errors.New("Failed. User not found. ")
+			}
+
+			// default
+			updatedData.Image_Url = "https://project3bucker.s3.ap-southeast-1.amazonaws.com/adidas-1.jpg"
+			// upload foto
+			file, _ := c.FormFile("file")
+			if file != nil {
+				res, err := helper.UploadProfileProduct(c)
+				if err != nil {
+					return domain.Core{}, errors.New("Registration Failed. Cannot Upload Data.")
+				}
+				log.Print(res)
+				updatedData.Image_Url = res
 			}
 
 			updatedData.Shop_Name = userData.ShopName
