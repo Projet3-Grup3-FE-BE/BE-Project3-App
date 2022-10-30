@@ -21,7 +21,7 @@ func New(dbConn *gorm.DB) domain.Repository {
 // Insert implements domain.Repository
 // Done Insert
 func (rq *repoQuery) Insert(newCart domain.Core) (domain.Core, error) {
-
+	log.Println("\n\n newCart =", newCart, "\n\n")
 	var cnv Cart = FromDomain(newCart)
 	var compare Product
 
@@ -35,7 +35,8 @@ func (rq *repoQuery) Insert(newCart domain.Core) (domain.Core, error) {
 		return domain.Core{}, errors.New("stock product tidak cukup")
 	}
 
-	if err := rq.db.Select("id_product", "id_user", "carts.qty").Create(&cnv).Error; err != nil {
+	log.Println("\n\n query cnv =", cnv, "\n\n")
+	if err := rq.db.Select("id_product", "id_user", "carts.qty", "carts.sub_total", "carts.notes", "carts.id_user_seller").Create(&cnv).Error; err != nil {
 		return domain.Core{}, err
 	}
 

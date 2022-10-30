@@ -5,6 +5,7 @@ import (
 	"be_project3team3/feature/cart/domain"
 	"be_project3team3/utils/jwt"
 	"errors"
+	"log"
 	"net/http"
 
 	// "net/http"
@@ -42,7 +43,9 @@ func (us *userHandler) AddDataCart() echo.HandlerFunc {
 		}
 		input.Id_user = jwt.ExtractIdToken(c)
 		cnv := ToDomain(input)
+		log.Println("\n\n handler cnv : ", cnv, "\n\n\n")
 		res, err := us.srv.AddCart(cnv)
+		log.Println("\n\n handler res : ", res, "\n\n\n")
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, FailResponse(err.Error()))
 		}
