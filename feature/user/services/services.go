@@ -7,8 +7,10 @@ import (
 
 	"be_project3team3/config"
 	"be_project3team3/feature/user/domain"
+	"be_project3team3/helper"
 
 	"github.com/golang-jwt/jwt"
+	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -30,7 +32,7 @@ type repoService struct {
 }
 
 // Register implements domain.Service
-func (rs *repoService) Register(newUser domain.Core) (domain.Core, error) {
+func (rs *repoService) Register(newUser domain.Core, c echo.Context) (domain.Core, error) {
 	var temp string
 	if newUser.Password != "" {
 		generate, _ := bcrypt.GenerateFromPassword([]byte(newUser.Password), 10)
@@ -41,6 +43,20 @@ func (rs *repoService) Register(newUser domain.Core) (domain.Core, error) {
 	} else {
 		temp = "error"
 	}
+
+	// upload foto
+	file, _ := c.FormFile("file")
+	if file != nil {
+		res, err := helper.UploadProfile(c)
+		if err != nil {
+			return domain.Core{}, errors.New("Registration Failed. Cannot Upload Data.")
+		}
+		log.Print(res)
+		newUser.ImageUrl = res
+	} else {
+		newUser.ImageUrl = "https://project3bucker.s3.ap-southeast-1.amazonaws.com/dummy-profile-pic.png"
+	}
+
 	res, err := rs.qry.Insert(newUser)
 
 	if err != nil {
@@ -88,10 +104,23 @@ func (rs *repoService) GenerateToken(id uint) string {
 	return str
 }
 
-func (rs *repoService) UpdateProfile(updatedData domain.Core) (domain.Core, error) {
+func (rs *repoService) UpdateProfile(updatedData domain.Core, c echo.Context) (domain.Core, error) {
 	if updatedData.Password != "" {
 		generate, _ := bcrypt.GenerateFromPassword([]byte(updatedData.Password), 10)
 		updatedData.Password = string(generate)
+	}
+
+	// upload foto
+	file, _ := c.FormFile("file")
+	if file != nil {
+		res, err := helper.UploadProfile(c)
+		if err != nil {
+			return domain.Core{}, errors.New("Registration Failed. Cannot Upload Data.")
+		}
+		log.Print(res)
+		updatedData.ImageUrl = res
+	} else {
+		updatedData.ImageUrl = "https://project3bucker.s3.ap-southeast-1.amazonaws.com/dummy-profile-pic.png"
 	}
 
 	res, err := rs.qry.Update(updatedData)

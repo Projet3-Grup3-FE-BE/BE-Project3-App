@@ -24,11 +24,11 @@ type Repository interface {
 }
 
 type Service interface {
-	Register(newUser Core) (Core, error)
+	Register(newUser Core, c echo.Context) (Core, error)
 	LoginUser(newUser Core) (Core, error)
 	GenerateToken(id uint) string
 	Delete(id uint) error
-	UpdateProfile(updateData Core) (Core, error)
+	UpdateProfile(updateData Core, c echo.Context) (Core, error)
 	GetUser(getuserdata Core) (Core, error)
 	GetMe(ID uint) (Core, error)
 }

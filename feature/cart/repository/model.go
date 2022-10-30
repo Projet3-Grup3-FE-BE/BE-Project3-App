@@ -37,13 +37,13 @@ type Cart struct {
 	gorm.Model
 	Id_user        uint
 	Id_product     uint
-	Product_name   string `gorm:"-:migration" gorm:"->"`
-	Price          int    `gorm:"-:migration" gorm:"->"`
-	ImageUrl       string `gorm:"-:migration" gorm:"->"`
+	Product_name   string //`gorm:"-:migration" gorm:"->"`
+	Price          int    //`gorm:"-:migration" gorm:"->"`
+	ImageUrl       string //`gorm:"-:migration" gorm:"->"`
 	Qty            int
 	Sub_total      int
 	Notes          string
-	ShopName       string `gorm:"-:migration" gorm:"->"`
+	ShopName       string //`gorm:"-:migration" gorm:"->"`
 	Id_user_seller uint
 }
 

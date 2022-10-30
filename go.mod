@@ -3,8 +3,10 @@ module be_project3team3
 go 1.17
 
 require (
+	github.com/aws/aws-sdk-go v1.44.125
 	github.com/labstack/echo/v4 v4.9.1
 	github.com/labstack/gommon v0.4.0
+	github.com/midtrans/midtrans-go v1.3.6
 	github.com/stretchr/testify v1.8.0
 	gorm.io/driver/mysql v1.4.0
 	gorm.io/gorm v1.24.0
@@ -13,13 +15,13 @@ require (
 require github.com/jmespath/go-jmespath v0.4.0 // indirect
 
 require (
-	github.com/aws/aws-sdk-go v1.44.119
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/joho/godotenv v1.4.0
+	github.com/labstack/echo v3.3.10+incompatible
 	github.com/mattn/go-colorable v0.1.11 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect

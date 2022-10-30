@@ -2,6 +2,9 @@ package main
 
 import (
 	"be_project3team3/config"
+	dOrder "be_project3team3/feature/order/delivery"
+	rOrder "be_project3team3/feature/order/repository"
+	sOrder "be_project3team3/feature/order/services"
 	dProduct "be_project3team3/feature/product/delivery"
 	rProduct "be_project3team3/feature/product/repository"
 	sProduct "be_project3team3/feature/product/services"
@@ -29,11 +32,13 @@ func main() {
 	repoUser := rUser.New(db)
 	serUser := sUser.New(repoUser)
 	mdlProduct := rProduct.New(db)
+	mdlOrder := rOrder.New(db)
 
 	//Cart
 	repoCart := rCart.New(db)
 	serCart := sCart.New(repoCart)
 	serProduct := sProduct.New(mdlProduct)
+	serOrder := sOrder.New(mdlOrder)
 
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORS())
@@ -42,6 +47,7 @@ func main() {
 	dUser.New(e, serUser)
 	dCart.New(e, serCart)
 	dProduct.New(e, serProduct)
+	dOrder.New(e, serOrder)
 
 	log.Fatal(e.Start(":8000"))
 

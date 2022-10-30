@@ -4,6 +4,7 @@ import (
 	"be_project3team3/feature/order/domain"
 	userDom "be_project3team3/feature/user/domain"
 	userRepo "be_project3team3/feature/user/repository"
+	"log"
 
 	"gorm.io/gorm"
 )
@@ -85,6 +86,7 @@ func (rq *repoQuery) Insert(newData domain.Core) (domain.Core, error) {
 
 	// convert ke core lg
 	newData = ToDomain(newInput)
+	log.Println("\n\n\nresult", newData, "\n\n\n")
 	return newData, nil
 }
 
